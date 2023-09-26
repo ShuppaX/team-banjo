@@ -6,20 +6,20 @@ How The Hell I Got Here is a humoristic point and click adventure which is inspi
 
 We will provide a download link with a .zip file for the game later.
 
-```bash
+```
 <Download link goes here>
 ```
 
 More information about the game will be provided later.
 
 ## Work in progress
-```bash
+```
 # Short name for feature
    Description of feature if needed.
 ```
 
 ## Known issues
-```bash
+```
 # Short name for issue
    Description of issue.
 ```
