@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.AI;
-using TeamBanjo.Utilities;
+using UnityEngine.InputSystem;
 using TeamBanjo.InputHandling;
+using TeamBanjo.Utilities;
 
 namespace TeamBanjo.Movement
 {
@@ -34,14 +35,10 @@ namespace TeamBanjo.Movement
 
         }
 
-        private void Move()
+        public void Move(InputAction.CallbackContext context)
         {
-            Vector2 currentPosition = transform.position;
-
-            if ( Vector2.Distance(inputHandler.ClickWorldPosition, transform.position) > 1.0f )
-            {
-                
-            }
+            inputHandler.OnClick();
+            agent.SetDestination(inputHandler.ClickWorldPosition);
         }
     }
 }

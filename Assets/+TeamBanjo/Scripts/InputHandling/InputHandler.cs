@@ -8,10 +8,8 @@ namespace TeamBanjo.InputHandling
         private Vector3 clickWorldPosition = Vector3.zero;
         public Vector2 ClickWorldPosition => clickWorldPosition;
 
-        public void OnClick(InputAction.CallbackContext context)
+        public void OnClick()
         {
-            if ( !context.started ) return;
-
             Vector3 clickPosition = Mouse.current.position.ReadValue();
             clickPosition.z = Camera.main.nearClipPlane;
 
