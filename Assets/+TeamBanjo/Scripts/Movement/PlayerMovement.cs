@@ -29,16 +29,20 @@ namespace TeamBanjo.Movement
             rb = Tools.GetReference<Rigidbody>(gameObject);
         }
 
-        // Update is called once per frame
-        private void Update()
-        {
-
-        }
-
         public void Move(InputAction.CallbackContext context)
         {
-            inputHandler.OnClick();
-            agent.SetDestination(inputHandler.ClickWorldPosition);
+            if ( context.performed )
+            {
+                inputHandler.OnClick();
+                agent.isStopped = false;
+                agent.SetDestination(inputHandler.ClickWorldPosition);
+            }
+        }
+
+        public void StopMovement()
+        {
+            agent.isStopped = true;
+            rb.velocity = Vector3.zero;
         }
     }
 }
