@@ -4,54 +4,32 @@ namespace TeamBanjo.CursorHover
 {
     public class CursorManager : MonoBehaviour
     {
-        [Header("Take Cursor")]
-        [SerializeField] private Texture2D[] takeCursorTextures;
-        [SerializeField] Vector2 takeCursorHotspot;
-
         [SerializeField] private float frameRate;
-
         private Vector2 cursorHotspot;
         private int frameCount;
         private int currentFrame;
         private float frameTimer;
         private bool isCursorOnInteractionPoint;
         private CursorHoverRecognizer[] cursorHoverRecognizers;
-
-        // TODO: Create more flexible way to add new cursor settings
+        private Texture2D[] currentCursorTextures;
 
         void Start()
         {
             FindReferences();
             AddListeners();
-
-            frameCount = takeCursorTextures.Length;
         }
 
         private void Update()
         {
             if ( isCursorOnInteractionPoint )
             {
-                frameTimer -= Time.deltaTime;
-                if ( frameTimer <= 0.0f )
-                {
-                    frameTimer += frameRate;
-                    currentFrame = (currentFrame + 1) % frameCount;
-                    Cursor.SetCursor(takeCursorTextures[currentFrame], cursorHotspot, CursorMode.Auto);
-                }
+                UpdateCursorAnimation();
             }
         }
 
         private void OnDisable()
         {
-            foreach ( var interactable in cursorHoverRecognizers )
-            {
-                interactable.OnMouseEnter -= SetCursor;
-            }
-
-            foreach ( var interactable in cursorHoverRecognizers )
-            {
-                interactable.OnMouseExit -= SetCursorDefault;
-            }
+            RemoveListeners();
         }
 
         private void FindReferences()
@@ -72,18 +50,49 @@ namespace TeamBanjo.CursorHover
             }
         }
 
-        //private void SetCursor(InteractionMode mode)
-        private void SetCursor()
+        private void RemoveListeners()
         {
-            isCursorOnInteractionPoint = true;
-            Cursor.SetCursor(takeCursorTextures[0], cursorHotspot, CursorMode.Auto);
-            cursorHotspot = takeCursorHotspot;
+            foreach ( var interactable in cursorHoverRecognizers )
+            {
+                interactable.OnMouseEnter -= SetCursor;
+            }
+
+            foreach ( var interactable in cursorHoverRecognizers )
+            {
+                interactable.OnMouseExit -= SetCursorDefault;
+            }
         }
 
+        private void SetCursor(Texture2D[] cursorTextures, Vector2 hotspot)
+        {
+            isCursorOnInteractionPoint = true;
+
+            // Set immediatelly the first animation frame for the cursor otherwise there might be slight delay in curson change.
+            Cursor.SetCursor(cursorTextures[0], hotspot, CursorMode.Auto);
+
+            cursorHotspot = hotspot;
+            currentCursorTextures = cursorTextures;
+            frameCount = cursorTextures.Length;
+        }
+
+        /// <summary>
+        /// Sets the cursor to the default one.
+        /// </summary>
         private void SetCursorDefault()
         {
             isCursorOnInteractionPoint = false;
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+        }
+
+        private void UpdateCursorAnimation()
+        {
+            frameTimer -= Time.deltaTime;
+            if ( frameTimer <= 0.0f )
+            {
+                frameTimer += frameRate;
+                currentFrame = (currentFrame + 1) % frameCount;
+                Cursor.SetCursor(currentCursorTextures[currentFrame], cursorHotspot, CursorMode.Auto);
+            }
         }
     }
 }
