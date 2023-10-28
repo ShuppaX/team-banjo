@@ -7,7 +7,7 @@ namespace TeamBanjo.PuzzleSystem
     public class PuzzleManager : MonoBehaviour
     {
         [SerializeField, Tooltip("List of puzzle interactables (in puzzle order)")]
-        private PickupAble[] puzzleItems;
+        private PuzzleInteractable[] puzzleItems;
 
         private int currentItemIndex = 0;
 
@@ -18,28 +18,28 @@ namespace TeamBanjo.PuzzleSystem
 
         private void OnDisable()
         {
-            foreach ( PickupAble item in puzzleItems )
+            foreach ( PuzzleInteractable item in puzzleItems )
             {
-                item.OnPickedUp -= OnPuzzleItemInteraction;
+                item.OnInteraction -= OnPuzzleItemInteraction;
             }
         }
 
         private void SetupPuzzle()
         {
             SetItemsNonInteractable();
-            EnableCurrentItem();
+            EnableInteractionWithCurrentItem();
         }
 
         private void SetItemsNonInteractable()
         {
-            foreach ( PickupAble item in puzzleItems )
+            foreach ( PuzzleInteractable item in puzzleItems )
             {
                 item.SetIsInteractable(false);
-                item.OnPickedUp += OnPuzzleItemInteraction;
+                item.OnInteraction += OnPuzzleItemInteraction;
             }
         }
 
-        private void EnableCurrentItem()
+        private void EnableInteractionWithCurrentItem()
         {
             if ( currentItemIndex < puzzleItems.Length )
             {
@@ -47,17 +47,17 @@ namespace TeamBanjo.PuzzleSystem
             }
         }
 
-        public void OnPuzzleItemInteraction(PickupAble item)
+        public void OnPuzzleItemInteraction(PuzzleInteractable item)
         {
             if ( item == puzzleItems[currentItemIndex] )
             {
-                item.OnPickedUp -= OnPuzzleItemInteraction;
+                item.OnInteraction -= OnPuzzleItemInteraction;
 
                 currentItemIndex++;
 
                 if ( currentItemIndex < puzzleItems.Length )
                 {
-                    EnableCurrentItem();
+                    EnableInteractionWithCurrentItem();
                 }
             }
         }
