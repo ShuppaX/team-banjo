@@ -6,6 +6,7 @@ namespace TeamBanjo.Interaction
     {
         float InteractionDistance { get; }
         Vector3 Position { get; }
+        bool IsInteractable { get; }
         void Interact();
     }
 }

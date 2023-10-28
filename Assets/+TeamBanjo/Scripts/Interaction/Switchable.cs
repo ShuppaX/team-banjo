@@ -10,9 +10,16 @@ namespace TeamBanjo.Interaction
 
         public override void Interact()
         {
-            base.Interact();
-            switchedOn = !switchedOn;
-            //Debug.Log($"Toggled {name}'s switchedOn value to {switchedOn}!");
+            if ( isInteractable )
+            {
+                Debug.Log($"The player interacted with {name}!");
+                switchedOn = !switchedOn;
+                //Debug.Log($"Toggled {name}'s switchedOn value to {switchedOn}!");
+            }
+            else
+            {
+                Debug.Log($"The player can't interact with {name} yet.");
+            }
         }
     }
 }
