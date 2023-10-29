@@ -14,9 +14,12 @@ namespace TeamBanjo.InputHandling
         private PlayerMovement playerMovement = null;
         private IInteractable currentInteractable = null;
 
+        private PlayerInput playerInput = null;
+
         private void Start()
         {
             playerMovement = Tools.GetReference<PlayerMovement>(gameObject);
+            playerInput = Tools.GetReference<PlayerInput>(gameObject);
         }
 
         private void Update()
@@ -36,6 +39,8 @@ namespace TeamBanjo.InputHandling
 
         public void OnClick()
         {
+            
+
             Vector3 clickPosition = Mouse.current.position.ReadValue();
             clickPosition.z = Camera.main.nearClipPlane;
 
