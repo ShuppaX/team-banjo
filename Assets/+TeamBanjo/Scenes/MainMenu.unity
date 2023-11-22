@@ -1833,29 +1833,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3220631694592768376, guid: 981e54bac8ae5eb4d9a475e3bcff4c4c,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3220631694592768376, guid: 981e54bac8ae5eb4d9a475e3bcff4c4c,
-        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3220631694592768376, guid: 981e54bac8ae5eb4d9a475e3bcff4c4c,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1913771715}
-    - target: {fileID: 3220631694592768376, guid: 981e54bac8ae5eb4d9a475e3bcff4c4c,
-        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 1913771714}
-    - target: {fileID: 3220631694592768376, guid: 981e54bac8ae5eb4d9a475e3bcff4c4c,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1913771715}
     - target: {fileID: 3220631694592768376, guid: 981e54bac8ae5eb4d9a475e3bcff4c4c,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
@@ -1863,28 +1848,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3220631694592768376, guid: 981e54bac8ae5eb4d9a475e3bcff4c4c,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
       value: OnStartNewGame
       objectReference: {fileID: 0}
     - target: {fileID: 3220631694592768376, guid: 981e54bac8ae5eb4d9a475e3bcff4c4c,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: OnTweenPunch
-      objectReference: {fileID: 0}
-    - target: {fileID: 3220631694592768376, guid: 981e54bac8ae5eb4d9a475e3bcff4c4c,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: TeamBanjo.UI.Button_StartNewGame, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 3220631694592768376, guid: 981e54bac8ae5eb4d9a475e3bcff4c4c,
-        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: TeamBanjo.Tween.Tween_Punch, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 3220631694592768376, guid: 981e54bac8ae5eb4d9a475e3bcff4c4c,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
+      value: TeamBanjo.UI.Button_StartNewGame, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 3220631694592768376, guid: 981e54bac8ae5eb4d9a475e3bcff4c4c,
         type: 3}
@@ -2004,10 +1974,6 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1913771715}
-    - targetCorrespondingSourceObject: {fileID: 8913910101872167062, guid: 981e54bac8ae5eb4d9a475e3bcff4c4c,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1913771714}
   m_SourcePrefab: {fileID: 100100000, guid: 981e54bac8ae5eb4d9a475e3bcff4c4c, type: 3}
 --- !u!224 &1913771710 stripped
 RectTransform:
@@ -2015,24 +1981,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1913771709}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1913771714
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 745560434}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8fe1ffd66b4530a4495359fbda76ae1c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  punch: {x: 0, y: 10, z: 0}
-  duration: 0.5
-  vibrato: 20
-  elasticity: 1
-  snapping: 0
-  originalPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &1913771715
 MonoBehaviour:
   m_ObjectHideFlags: 0
