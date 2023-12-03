@@ -1,18 +1,22 @@
+using NaughtyAttributes;
 using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using NaughtyAttributes;
 
-namespace TeamBanjo.UI
+namespace TeamBanjo
 {
-    public class Button_StartNewGame : MonoBehaviour
+    public class Button_LoadScene : MonoBehaviour
     {
-        [SerializeField, Scene] private string gameScene;
+        [SerializeField, Scene] private string nextScene;
         public static event Action<string> NextScene;
         private Button button;
 
         private void Awake()
+        {
+            GetReference();
+        }
+
+        private void GetReference()
         {
             button = GetComponent<Button>();
             if ( button == null )
@@ -21,11 +25,11 @@ namespace TeamBanjo.UI
             }
         }
 
-        public void OnStartNewGame()
+        public void OnButtonClick()
         {
             button.interactable = false;
 
-            NextScene?.Invoke(gameScene);
+            NextScene?.Invoke(nextScene);
         }
     }
 }

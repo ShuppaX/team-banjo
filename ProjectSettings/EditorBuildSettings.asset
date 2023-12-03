@@ -9,11 +9,11 @@ EditorBuildSettings:
     path: Assets/OutdoorsScene.unity
     guid: 8124e5870f4fd4c779e7a5f994e84ad1
   - enabled: 1
-    path: Assets/+TeamBanjo/Scenes/ScreenTransition.unity
-    guid: d4c1fcea5f5b56b468872957e7322789
-  - enabled: 1
     path: Assets/+TeamBanjo/Scenes/MainMenu.unity
     guid: fa546b04b9d3151429bd153fa70b919a
+  - enabled: 1
+    path: Assets/+TeamBanjo/Scenes/ScreenTransition.unity
+    guid: d4c1fcea5f5b56b468872957e7322789
   - enabled: 1
     path: Assets/+TeamBanjo/Scenes/Level1.unity
     guid: 14ac2fb30487f8847b03d39718ef5d5a

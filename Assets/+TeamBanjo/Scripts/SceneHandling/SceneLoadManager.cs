@@ -2,7 +2,6 @@ using System.Collections;
 using UnityEngine;
 using NaughtyAttributes;
 using UnityEngine.SceneManagement;
-using TeamBanjo.UI;
 
 namespace TeamBanjo.SceneHandling
 {
@@ -34,6 +33,9 @@ namespace TeamBanjo.SceneHandling
                 StopCoroutine(WaitScreenTransitionAndLoadNextScene());
                 transitionRoutine = null;
             }
+
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+            RemoveNextSceneListener();
         }
 
         private void GetReference()
@@ -42,6 +44,11 @@ namespace TeamBanjo.SceneHandling
             {
                 Debug.LogError($"{this} is missing a reference to Transition Animator!");
             }
+        }
+
+        private void RemoveNextSceneListener()
+        {
+            Button_LoadScene.NextScene -= OnNextScene;
         }
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -58,10 +65,11 @@ namespace TeamBanjo.SceneHandling
             // Try set listener to the NextLevel event.
             try
             {
-                Button_StartNewGame.NextScene += OnNextScene;
+                Button_LoadScene.NextScene += OnNextScene;
             }
             catch ( System.Exception )
             {
+                Debug.LogError($"{this} couldn't get a reference to a NextScene event!");
                 throw;
             }
         }
@@ -74,6 +82,8 @@ namespace TeamBanjo.SceneHandling
         {
             previousScene = UpdatePreviousScene();
             this.nextScene = nextScene;
+
+            RemoveNextSceneListener();
 
             StartScreenTransition();
         }
@@ -98,10 +108,13 @@ namespace TeamBanjo.SceneHandling
         IEnumerator WaitScreenTransitionAndLoadNextScene()
         {
             // Waiting screen transition
-            yield return new WaitForSeconds(transitionTime);
+            yield return new WaitForSecondsRealtime(transitionTime);
 
             // Unloading previous scene for example, Main Menu.
             SceneManager.UnloadSceneAsync(previousScene);
+
+            // Ensure that pause is not on when loading the next scene.
+            Time.timeScale = 1.0f;
 
             // Loading next scene for example, Level1.
             SceneManager.LoadSceneAsync(nextScene, LoadSceneMode.Additive);

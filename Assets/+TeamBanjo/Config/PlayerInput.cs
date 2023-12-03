@@ -37,6 +37,15 @@ namespace TeamBanjo.InputActions
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""5baa100a-47e0-4571-8043-889069eac9af"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -72,6 +81,28 @@ namespace TeamBanjo.InputActions
                     ""action"": ""WalkAndInteract"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""041f3a35-2923-4cff-af2f-9322308c823a"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse"",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e031574f-9828-4db5-b9e8-76fc5a13011e"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -83,6 +114,11 @@ namespace TeamBanjo.InputActions
             ""devices"": [
                 {
                     ""devicePath"": ""<Mouse>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                },
+                {
+                    ""devicePath"": ""<Keyboard>"",
                     ""isOptional"": false,
                     ""isOR"": false
                 }
@@ -104,6 +140,7 @@ namespace TeamBanjo.InputActions
             // Player
             m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
             m_Player_WalkAndInteract = m_Player.FindAction("WalkAndInteract", throwIfNotFound: true);
+            m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -166,11 +203,13 @@ namespace TeamBanjo.InputActions
         private readonly InputActionMap m_Player;
         private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
         private readonly InputAction m_Player_WalkAndInteract;
+        private readonly InputAction m_Player_Pause;
         public struct PlayerActions
         {
             private @PlayerInput m_Wrapper;
             public PlayerActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
             public InputAction @WalkAndInteract => m_Wrapper.m_Player_WalkAndInteract;
+            public InputAction @Pause => m_Wrapper.m_Player_Pause;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -183,6 +222,9 @@ namespace TeamBanjo.InputActions
                 @WalkAndInteract.started += instance.OnWalkAndInteract;
                 @WalkAndInteract.performed += instance.OnWalkAndInteract;
                 @WalkAndInteract.canceled += instance.OnWalkAndInteract;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
             }
 
             private void UnregisterCallbacks(IPlayerActions instance)
@@ -190,6 +232,9 @@ namespace TeamBanjo.InputActions
                 @WalkAndInteract.started -= instance.OnWalkAndInteract;
                 @WalkAndInteract.performed -= instance.OnWalkAndInteract;
                 @WalkAndInteract.canceled -= instance.OnWalkAndInteract;
+                @Pause.started -= instance.OnPause;
+                @Pause.performed -= instance.OnPause;
+                @Pause.canceled -= instance.OnPause;
             }
 
             public void RemoveCallbacks(IPlayerActions instance)
@@ -228,6 +273,7 @@ namespace TeamBanjo.InputActions
         public interface IPlayerActions
         {
             void OnWalkAndInteract(InputAction.CallbackContext context);
+            void OnPause(InputAction.CallbackContext context);
         }
     }
 }

@@ -7,7 +7,7 @@ namespace TeamBanjo.UI
     {
         private string screenTransitionSceneName = "ScreenTransition";
 
-        private void Awake()
+        private void Start()
         {
             if ( !SceneManager.GetSceneByName(screenTransitionSceneName).isLoaded )
             {

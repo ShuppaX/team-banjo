@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 946322171353661627}
   - component: {fileID: 6360721983335705775}
   - component: {fileID: 3291817518957948287}
+  - component: {fileID: 376356785812751015}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -219,6 +220,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 8eebf6f4-e2d3-4204-b0e1-e088211f1fec
     m_ActionName: Player/WalkAndInteract[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 376356785812751015}
+        m_TargetAssemblyTypeName: TeamBanjo.InputHandling.KeyboardInputs, Assembly-CSharp
+        m_MethodName: Pause
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 5baa100a-47e0-4571-8043-889069eac9af
+    m_ActionName: Player/Pause[/Keyboard/q]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -258,6 +275,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cc08685a4a69e47469adc4ed581c83d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &376356785812751015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 805362422721103608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c698579512a01224b8d19dd2813796e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1347232681529561294
