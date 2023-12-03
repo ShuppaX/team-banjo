@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
 using UnityEngine.SceneManagement;
@@ -12,83 +11,131 @@ namespace TeamBanjo.SceneHandling
         [SerializeField, Scene] private string mainMenuScene;
         [SerializeField, Scene] private string loadingScene;
         [SerializeField, Scene] private string firstLevelScene;
-        [SerializeField] private string previousScene;
-        [SerializeField] private string activeScene;
-        [SerializeField] private string nextScene;
+        [SerializeField] private Animator transitionAnimator;
+        [SerializeField, AnimatorParam("transitionAnimator")] private int startAnimation;
+        [SerializeField, AnimatorParam("transitionAnimator")] private int endAnimation;
+        private string previousScene;
+        private string currentScene;
+        private string nextScene;
+        private float transitionTime = 1.0f;
+        private Coroutine transitionRoutine;
 
         private void Awake()
         {
-            DontDestroyOnLoad(gameObject);
-            SceneManager.sceneLoaded += OnSceneLoad;
+            GetReference();
+
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
 
-        private void Start()
+        private void OnDisable()
         {
-
+            if ( transitionAnimator != null )
+            {
+                StopCoroutine(WaitScreenTransitionAndLoadNextScene());
+                transitionRoutine = null;
+            }
         }
 
-        private void OnSceneLoad(Scene scene, LoadSceneMode mode)
+        private void GetReference()
         {
-            // Set listeners
+            if ( transitionAnimator == null )
+            {
+                Debug.LogError($"{this} is missing a reference to Transition Animator!");
+            }
+        }
+
+        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            // Ensure that LoasingScene is not active scene
+            if ( SceneManager.GetSceneAt(0).name == loadingScene )
+            {
+                SceneManager.SetActiveScene(SceneManager.GetSceneAt(1));
+            }
+
+            previousScene = UpdatePreviousScene();
+            currentScene = UpdateCurrentScene();
+
+            // Try set listener to the NextLevel event.
             try
             {
-                Button_StartNewGame.NextLevel += SetNextLevel;
+                Button_StartNewGame.NextScene += OnNextScene;
             }
             catch ( System.Exception )
             {
                 throw;
             }
+        }
 
-            // Debug
-            Debug.Log("OnSceneLoaded: " + scene.name);
-            Debug.Log(mode);
+        /// <summary>
+        /// When player pushes button to load next scene aka level. Updates Previous and Next Scene strings. Calls StartScreenTransition.
+        /// </summary>
+        /// <param name="nextScene">Name of the next scene</param>
+        private void OnNextScene(string nextScene)
+        {
+            previousScene = UpdatePreviousScene();
+            this.nextScene = nextScene;
 
-            // Set scenes
-            SetSceneNames(scene);
+            StartScreenTransition();
+        }
 
-            // Clause gate
-            if ( previousScene == "" )
-            {
-                return;
-            }
+        /// <summary>
+        /// Start transtion animation and calls coroutine to wait it.
+        /// </summary>
+        private void StartScreenTransition()
+        {
+            // Start screen transition.
+            transitionAnimator.SetTrigger(startAnimation);
 
-            // Remove listeners
-            try
-            {
-                Button_StartNewGame.NextLevel -= SetNextLevel;
-            }
-            catch ( System.Exception )
-            {
-                throw;
-            }
+            transitionRoutine = StartCoroutine(WaitScreenTransitionAndLoadNextScene());
+        }
 
-            // Unload previus scene
+        /// <summary>
+        /// Waits for the screen transition.
+        /// After transition is covering the screen it unloads the old scene and loads the next one.
+        /// Starts end transition to reveal the next scene.
+        /// </summary>
+        /// <returns></returns>
+        IEnumerator WaitScreenTransitionAndLoadNextScene()
+        {
+            // Waiting screen transition
+            yield return new WaitForSeconds(transitionTime);
+
+            // Unloading previous scene for example, Main Menu.
             SceneManager.UnloadSceneAsync(previousScene);
 
-            // Load next scene
-            //SceneManager.LoadSceneAsync(nextScene, LoadSceneMode.Additive);
+            // Loading next scene for example, Level1.
+            SceneManager.LoadSceneAsync(nextScene, LoadSceneMode.Additive);
 
-            SetSceneNames(scene);
+            nextScene = null;
 
-            // Unload LoadingScreen
-            SceneManager.UnloadSceneAsync(loadingScene);
+            // End screen transition.
+            transitionAnimator.ResetTrigger(startAnimation);
+            transitionAnimator.SetTrigger(endAnimation);
+
+            transitionRoutine = null;
         }
 
-        private void SetNextLevel(string scene)
+        /// <summary>
+        /// Updates a string of currentScene.
+        /// </summary>
+        /// <returns>Current Scene</returns>
+        private string UpdateCurrentScene()
         {
-            nextScene = scene;
+            string currentScene;
+            currentScene = SceneManager.GetActiveScene().name;
+            return currentScene;
         }
 
-        private void SetNextLevel(Scene scene)
-        {
-            //nextScene = scene;
-            OnSceneLoad(scene, LoadSceneMode.Additive);
-        }
+        /// <summary>
+        /// Updates a string of previousScene.
+        /// </summary>
+        /// <returns>Previous Scene</returns>
 
-        private void SetSceneNames(Scene scene)
+        private string UpdatePreviousScene()
         {
-            previousScene = activeScene;
-            activeScene = scene.name;
+            string previousScene;
+            previousScene = currentScene;
+            return previousScene;
         }
     }
 }
