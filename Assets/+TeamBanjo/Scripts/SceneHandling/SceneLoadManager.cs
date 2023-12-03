@@ -117,7 +117,14 @@ namespace TeamBanjo.SceneHandling
             Time.timeScale = 1.0f;
 
             // Loading next scene for example, Level1.
-            SceneManager.LoadSceneAsync(nextScene, LoadSceneMode.Additive);
+            var asyncLoadLevel = SceneManager.LoadSceneAsync(nextScene, LoadSceneMode.Additive);
+
+            // Waiting while loading the next scene.
+            // Otherwise transition to the next scene would start even if next scene is still being loaded.
+            while ( !asyncLoadLevel.isDone )
+            {
+                yield return null;
+            }
 
             nextScene = null;
 
