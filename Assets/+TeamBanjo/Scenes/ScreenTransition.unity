@@ -443,11 +443,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainMenuScene: MainMenu
-  loadingScene: LoadingScreen
+  loadingScene: ScreenTransition
   firstLevelScene: Level1
-  previousScene: 
-  currentScene: 
-  nextScene: 
   transitionAnimator: {fileID: 1575471418}
   startAnimation: 1589148299
   endAnimation: 951154001
